@@ -1,0 +1,33 @@
+extends ../template_admin
+
+block head
+
+block content
+ .row
+     .col-md-6
+      .box.box-primary
+       .box-header.with-border
+        h3.box-title Edit Role
+       // /.box-header
+       // form start
+       form(role='form', action='/admin/role/edit', method='post')
+        .box-body
+         -if(error != null)
+          .form-group.has-error
+           p.help-block Example block-level help text here.
+         .form-group
+          label(for='name') Name
+          input#name.form-control(placeholder='Name', name='name', type='text', required='required', value=role.name)
+          input.form-control(name='id', type='hidden', value=role.id)
+          h6.error(style='color: red;')
+         .checkbox
+          label
+           -if(role.status)
+            input(name='status', checked='checked', value='true', type='checkbox')
+            |  Active
+           -if(!role.status)
+            input(name='status', value='true', type='checkbox')
+            |  Active
+        // /.box-body
+        .box-footer
+         button.btn.btn-primary(type='submit') Save

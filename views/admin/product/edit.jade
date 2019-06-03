@@ -1,0 +1,77 @@
+extends ../template_admin
+
+block head
+
+block content
+ .row
+     .col-md-6
+      .box.box-primary
+       .box-header.with-border
+        h3.box-title Edit Product
+       // /.box-header
+       // form start
+       form(role='form', action='/admin/product/edit', method='post', enctype="multipart/form-data")
+        .box-body
+         -if(error != null)
+          .form-group.has-error
+           p.help-block Example block-level help text here.
+         .form-group
+          label(for='name') Name
+          input#name.form-control(placeholder='Name', name='name', type='text', required='required', value= product.name)
+          input.form-control(name='id', type='hidden', value=product.id)
+          input.form-control(name='o_photo', type='hidden', value=product.photo)
+          h6.error(style='color: red;')
+         .form-group
+          label(for='price') Price
+          input#price.form-control(placeholder='Price', name='price', type='number', required='required', min="0", step="any", value= product.price)
+          h6.error(style='color: red;')
+         .form-group
+          label(for='quantity') Quantity
+          input#quantity.form-control(placeholder='Quantity', name='quantity', type='number', required='required', min="1", value= product.quantity)
+          h6.error(style='color: red;')
+         .form-group
+          label(for='description') Description
+          textarea(name="description")= product.description
+         .form-group
+          label(for='photo') Photo
+          input(type='file', accept="image/*", name='photo')
+          br
+          img(src='/images/home/' + product.photo, width="100")
+         .checkbox
+          label
+           -if(product.special)
+            input(name='special', checked='checked', value='true', type='checkbox')
+            |  Active
+           -if(!product.special)
+            input(name='special', value='true', type='checkbox')
+            |  Special
+         .form-group
+          label Category
+          select.form-control(name='categoryId')
+           -each category in categories 
+            optgroup(label= category.name)
+             -if(category.subcategories != null)
+               each subcategory in category.subcategories
+                -if(subcategory.id == product.categoryId)
+                 option(value= subcategory.id, selected='selected')= subcategory.name
+                -if(subcategory.id != product.categoryId)
+                 option(value= subcategory.id)= subcategory.name
+         .form-group
+          label Brand
+          select.form-control(name='brandId')
+           -each brand in brands 
+            -if(brand.id == product.brandId)
+                 option(value= brand.id, selected='selected')= brand.name
+            -if(brand.id != product.brandId)
+                 option(value= brand.id)= brand.name
+         .checkbox
+          label
+           -if(product.status)
+            input(name='status', checked='checked', value='true', type='checkbox')
+            |  Active
+           -if(!product.status)
+            input(name='status', value='true', type='checkbox')
+            |  Active
+        // /.box-body
+        .box-footer
+         button.btn.btn-primary(type='submit') Save

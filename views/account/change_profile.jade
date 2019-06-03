@@ -1,0 +1,14 @@
+extends ../template
+
+block head
+
+block content
+ .col-sm-6
+  .signup-form
+   h2 Change Profile
+   form(method='post', action='/account/change-profile')
+    input(type='text', name='username', value=account.username, readonly='readonly')
+    input(placeholder='Password', type='password', name='password')
+    input(placeholder='Full Name', type='text', name='fullName', value=account.fullName)
+    input(placeholder='Email Address', type='email', name='email', value=account.email)
+    button.btn.btn-default(type='submit') Save

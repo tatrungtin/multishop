@@ -1,0 +1,36 @@
+extends ../template_admin
+
+block head
+
+block content
+ .row
+  .col-xs-12
+  .box
+   .box-header
+    h3.box-title Brands
+   .box-body
+       #example1_wrapper.dataTables_wrapper.form-inline.dt-bootstrap
+        .row
+         .col-sm-12
+          #example1_wrapper.dataTables_wrapper.form-inline.dt-bootstrap.no-footer
+           .row
+            .col-sm-12
+             #example1_wrapper.dataTables_wrapper.form-inline.dt-bootstrap.no-footer
+              .row
+               .col-sm-12
+                table#example1.table.table-bordered.table-striped.dataTable.no-footer(role='grid', aria-describedby='example1_info')
+                 thead
+                  tr(role='row')
+                   th.sorting_desc(tabindex='0', aria-controls='example1', rowspan='1', colspan='1', aria-label='Name: activate to sort column ascending', style='width: 130px;', aria-sort='descending') Name
+                   th.sorting(tabindex='0', aria-controls='example1', rowspan='1', colspan='1', aria-label='Status: activate to sort column ascending', style='width: 142px;') Status
+                   th.sorting(tabindex='0', aria-controls='example1', rowspan='1', colspan='1', aria-label='Action: activate to sort column ascending', style='width: 250px;') Action
+                 tbody
+                  -if(brands != null)
+                    -for brand in brands
+                      tr
+                       td.sorting_1= brand.name
+                       td= brand.status ? 'Active' : 'Deactivate'
+                       td
+                        a(href='/admin/product/brand/' + brand.id) Products | 
+                        a(href='/admin/brand/edit/' + brand.id) Edit | 
+                        a(href='/admin/brand/delete/' + brand.id, onclick="return confirm('Are you sure?')") Delete

@@ -1,0 +1,94 @@
+extends ../template
+
+block head
+
+block content
+ .features_items
+  h2.title.text-center= 'Product of ' + category.name
+  each p in products
+   .col-sm-4
+    .product-image-wrapper
+     .single-products
+      .productinfo.text-center
+       a(href='/product/detail/' + p.id)
+        img(src='/images/home/' + p.photo, alt='')
+       h2= '$' + p.price.toFixed(2)
+       p= p.name
+       a.btn.btn-default.add-to-cart(href='/cart/add/' + p.id)
+        i.fa.fa-shopping-cart
+        | Add to cart
+ ul.pagination
+ script(src='/js/jquery.js')
+ script(src='/js/jquery.ba-hashchange.js')
+ script(src='/js/jquery.paging.min.js')
+ script.
+  (function() {
+  var prev = {
+  start: 0,
+  stop: 0
+  };
+  var content = $('.features_items .col-sm-4');
+  var Paging = $(".pagination").paging(content.length, {
+  onSelect: function() {
+  var data = this.slice;
+  content.slice(prev[0], prev[1]).css('display', 'none');
+  content.slice(data[0], data[1]).fadeIn("slow");
+  prev = data;
+  return true; // locate!
+  },
+  onFormat: function(type) {
+  switch (type) {
+  case 'block':
+  if (!this.active)
+    return '';
+  //return '<li class="disabled"><span>' + this.value + '</span></li>';
+  else if (this.value != this.page)
+  return '<li><em><a href="#' + this.value + '">' + this.value + '</a></em></li>';
+  return '<li class="active"><span>' + this.value + '</span></li>';
+  case 'right':
+  case 'left':
+  if (!this.active) {
+  return '';
+  }
+  return '<li><a href="#' + this.value + '">' + this.value + '</a></li>';
+  case 'next':
+  if (this.active) {
+  return '<li><a href="#' + this.value + '" class="next">Next &raquo;</a></li>';
+  }
+  return '<li class="disabled"><span>Next &raquo;</span></li>';
+  case 'prev':
+  if (this.active) {
+  return '<li><a href="#' + this.value + '" class="prev">&laquo; Previous</a></li>';
+  }
+  return '<li class="disabled"><span>&laquo; Previous</span></li>';
+  case 'first':
+  if (this.active) {
+  return '<li><a href="#' + this.value + '" class="first">Frist</a></li>';
+  }
+  return '<li class="disabled"><span>Frist</span></li>';
+  case 'last':
+  if (this.active) {
+  return '<li><a href="#' + this.value + '" class="prev">Last</a></li>';
+  }
+  return '<li class="disabled"><span>Last</span></li>';
+  case 'fill':
+  if (this.active) {
+  return "...";
+  }
+  }
+  return ""; // return nothing for missing branches
+  },
+  format: '[< ncnnn! >]',
+  perpage: #{setting.value},
+  lapping: 0,
+  page: null // we await hashchange() event
+  });
+  $(window).hashchange(function() {
+  
+  if (window.location.hash)
+  Paging.setPage(window.location.hash.substr(1));
+  else
+  Paging.setPage(1); // we dropped "page" support and need to run it by hand
+  });
+  $(window).hashchange();
+  })();

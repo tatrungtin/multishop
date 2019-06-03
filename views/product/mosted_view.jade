@@ -1,0 +1,19 @@
+extends ../template
+
+block head
+
+block content
+ .features_items
+  h2.title.text-center Mosted View
+  each p in products
+   .col-sm-4
+    .product-image-wrapper
+     .single-products
+      .productinfo.text-center
+       a(href='/product/detail/' + p.id)
+        img(src='/images/home/' + p.photo, alt='')
+       h2= '$' + p.price.toFixed(2)
+       p= p.name
+       a.btn.btn-default.add-to-cart(href='/cart/add/' + p.id)
+        i.fa.fa-shopping-cart
+        | Add to cart

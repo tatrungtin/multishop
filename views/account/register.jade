@@ -1,0 +1,17 @@
+extends ../template
+
+block head
+
+block content
+ .col-sm-6
+  .signup-form
+   h2 New User Signup!
+   p= (message == null ? '': message)
+   form(method='post', action='/account/sign-up')
+    input(placeholder='Username', type='text', name='username', required='required')
+    input(placeholder='Password', type='password', name='password', required='required')
+    input(placeholder='Full Name', type='text', name='fullName', required='required')
+    input(placeholder='Email Address', type='email', name='email', required='required')
+    button.btn.btn-default(type='submit') Signup
+
+    

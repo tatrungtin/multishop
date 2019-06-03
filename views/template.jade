@@ -1,0 +1,161 @@
+html(lang='en')
+ head
+  meta(charset='utf-8')
+  meta(name='viewport', content='width=device-width, initial-scale=1.0')
+  meta(name='description', content='')
+  meta(name='author', content='')
+  title Nodejs Cart - Express Framework & MongoDB & PayPal Payment
+  link(href='/images/favicon.ico', rel='icon', type='image/gif')
+  link(href='/css/bootstrap.min.css', rel='stylesheet')
+  link(href='/css/font-awesome.min.css', rel='stylesheet')
+  link(href='/css/prettyPhoto.css', rel='stylesheet')
+  link(href='/css/price-range.css', rel='stylesheet')
+  link(href='/css/animate.css', rel='stylesheet')
+  link(href='/css/main.css', rel='stylesheet')
+  link(href='/css/responsive.css', rel='stylesheet')
+  link(rel='shortcut icon', href='/images/ico/favicon.ico')
+ // /head
+ block head
+ body
+  header#header
+   // header
+   // /header_top
+   .header-middle
+    // header-middle
+    .container
+     .row
+      .col-sm-4
+       .logo.pull-left
+        a(href='/')
+         img(src='/images/logo.png', height='60')
+      .col-sm-8
+       .shop-menu.pull-right
+        ul.nav.navbar-nav         
+         li
+          a(href='/cart')
+           -s = session.cart == null ? 0 : session.cart.length
+           -sum = 0
+           -if(session.cart != null)
+             each item in session.cart
+              -sum += item.product.price * item.quantity
+           i.fa.fa-shopping-cart
+           |  Cart(#{s}) - $#{sum.toFixed(2)}
+         -if(session.username == null)  
+           li
+            a(href='/account/sign-up')
+             i.fa.fa-user
+             |  Sign Up 
+           li
+            a(href='/account/login')
+             i.fa.fa-lock
+             |  Login
+         -if(session.username != null)
+           li(class="dropdown")
+            a(href='#')
+             i.fa.fa-user
+             |  Welcome #{session.username}
+             i.fa.fa-angle-down
+            ul.sub-menu(role='menu')
+             li
+              a(href='/account/orders') Orders
+             li
+              a(href='/account/change-profile') Change Profile
+             li
+              a(href='/account/logout') Logout
+   // /header-middle
+   .header-bottom
+    // header-bottom
+    .container
+     .row
+      .col-sm-9
+       .navbar-header
+        button.navbar-toggle(type='button', data-toggle='collapse', data-target='.navbar-collapse')
+         span.sr-only Toggle navigation
+         span.icon-bar
+         span.icon-bar
+         span.icon-bar
+       .mainmenu.pull-left
+        ul.nav.navbar-nav.collapse.navbar-collapse
+         li
+          a(href='/', class=currentUrl != null && currentUrl == 'home' ? 'active' : '') Features Products
+         li
+          a(href='/product/latest', class=currentUrl != null && currentUrl == 'latest' ? 'active' : '') Latest Products
+         li
+          a(href='/product/mosted-view', class=currentUrl != null && currentUrl == 'mosted-view' ? 'active' : '') Mosted View
+         li
+          a(href='/product/best-seller', class=currentUrl != null && currentUrl == 'best-seller' ? 'active' : '') Best Seller
+      .col-sm-3
+       .search_box.pull-right
+        form.searchform(action='/product/search', method='post')
+         input(placeholder='Search', type='text', name='keyword')
+         button.btn.btn-default(type='submit')
+          i.fa.fa-arrow-circle-o-right
+   // /header-bottom
+  // /header
+  // /slider
+  section
+   .container
+    .row
+     .col-sm-3
+      .left-sidebar
+       h2 Category
+       #accordian.panel-group.category-products
+        for category in categories
+            .panel.panel-default
+             .panel-heading
+              h4.panel-title
+               a(data-toggle='collapse', data-parent='#accordian', href='#cat' + category.id)=  category.name
+                span.badge.pull-right
+                 i.fa.fa-plus
+                | 									
+             -status = false
+             -each subcategory in category.subcategories
+              -if(currentCategoryId != null && currentCategoryId == subcategory.id)
+               -status = true
+             div(id='cat' + category.id, class="panel-collapse " + (status ? 'in' : 'collapse'))
+              .panel-body
+               ul
+                each subcategory in category.subcategories
+                 if (subcategory.status == true)
+                  li
+                   a(href='/product/category/' + subcategory.id)= subcategory.name 
+                
+       // /category-products
+       .brands_products
+        // brands_products
+        h2 Brands
+        .brands-name
+         ul.nav.nav-pills.nav-stacked
+          for brand in brands
+           li
+            a(href='/brand/product/' + brand.id)= brand.name
+             span.pull-right
+             | 
+       // /brands_products
+       // /price-range
+       .shipping.text-center
+        // shipping
+        img(src='/images/home/shipping.jpg', alt='')
+       // /shipping
+     .col-sm-9.padding-right
+      block content
+      // features_items
+      // /category-tab
+      // /recommended_items
+  footer#footer
+   // Footer
+   .footer-bottom
+    .container
+     .row
+      p.pull-left Copyright © 2017 OctopusCodes. All rights reserved.
+  // /Footer
+  script(src='/js/jquery.js')
+  script(src='/js/bootstrap.min.js')
+  script(src='/js/jquery.scrollUp.min.js')
+  script(src='/js/price-range.js')
+  script(src='/js/jquery.prettyPhoto.js')
+  script(src='/js/main.js')
+  a#scrollUp(href='#top', style='position: fixed; z-index: 2147483647; display: none;')
+   i.fa.fa-angle-up
+  a#scrollUp(href='#top', style='position: fixed; z-index: 2147483647; display: none;')
+   i.fa.fa-angle-up

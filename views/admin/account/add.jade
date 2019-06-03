@@ -1,0 +1,45 @@
+extends ../template_admin
+
+block head
+
+block content
+ .row
+     .col-md-6
+      .box.box-primary
+       .box-header.with-border
+        h3.box-title Add Account
+       // /.box-header
+       // form start
+       form(role='form', action='/admin/account/add', method='post', enctype="multipart/form-data")
+        .box-body
+         -if(error != null)
+          .form-group.has-error
+           p.help-block Example block-level help text here.
+         .form-group
+          label(for='username') Username
+          input#username.form-control(placeholder='Username', name='username', type='text', required='required')
+          h6.error(style='color: red;')
+         .form-group
+          label(for='password') Password
+          input#password.form-control(placeholder='Password', name='password', type='password', required='required')
+          h6.error(style='color: red;')
+         .form-group
+          label(for='fullName') Full Name
+          input#fullName.form-control(placeholder='Full Name', name='fullName', type='text')
+          h6.error(style='color: red;')
+         .form-group
+          label(for='email') Email
+          input#email.form-control(placeholder='Email', name='email', type='text')
+          h6.error(style='color: red;')
+         .form-group
+          label Role
+          select.form-control(name='roleId')
+           -each role in roles
+             option(value= role.id)= role.name
+         .checkbox
+          label
+           input(name='status', checked='checked', value='true', type='checkbox')
+           |  Active
+        // /.box-body
+        .box-footer
+         button.btn.btn-primary(type='submit') Save

@@ -1,0 +1,33 @@
+extends ../template_admin
+
+block head
+
+block content
+ .row
+     .col-md-6
+      .box.box-primary
+       .box-header.with-border
+        h3.box-title Edit Category
+       // /.box-header
+       // form start
+       form(role='form', action='/admin/category/edit', method='post')
+        .box-body
+         -if(error != null)
+          .form-group.has-error
+           p.help-block Example block-level help text here.
+         .form-group
+          label(for='name') Name
+          input#name.form-control(placeholder='Name', name='name', type='text', required='required', value=category.name)
+          input.form-control(name='id', type='hidden', value=category.id)
+          h6.error(style='color: red;')
+         .checkbox
+          label
+           -if(category.status)
+            input(name='status', checked='checked', value='true', type='checkbox')
+            |  Active
+           -if(!category.status)
+            input(name='status', value='true', type='checkbox')
+            |  Active
+        // /.box-body
+        .box-footer
+         button.btn.btn-primary(type='submit') Save

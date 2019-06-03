@@ -1,0 +1,28 @@
+extends ../template_admin
+
+block head
+
+block content
+ .row
+     .col-md-6
+      .box.box-primary
+       .box-header.with-border
+        h3.box-title Add Role
+       // /.box-header
+       // form start
+       form(role='form', action='/admin/role/add', method='post')
+        .box-body
+         -if(error != null)
+          .form-group.has-error
+           p.help-block Example block-level help text here.
+         .form-group
+          label(for='exampleInputEmail1') Name
+          input#exampleInputEmail1.form-control(placeholder='Name', name='name', type='text', required='required')
+          h6.error(style='color: red;')
+         .checkbox
+          label
+           input(name='status', checked='checked', value='true', type='checkbox')
+           |  Active
+        // /.box-body
+        .box-footer
+         button.btn.btn-primary(type='submit') Save

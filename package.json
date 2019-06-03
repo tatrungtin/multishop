@@ -1,0 +1,24 @@
+{
+  "name": "mvc-in-node.js",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www"
+  },
+  "dependencies": {
+    "async": "^2.6.2",
+    "bcrypt": "^3.0.6",
+    "body-parser": "^1.19.0",
+    "cookie-parser": "~1.4.3",
+    "debug": "^4.1.1",
+    "express": "^4.17.0",
+    "express-fileupload": "^0.1.3",
+    "express-session": "^1.16.1",
+    "jade": "~1.11.0",
+    "mongodb": "^3.2.4",
+    "monk": "^7.0.0",
+    "morgan": "^1.9.1",
+    "node-datetime": "^2.1.2",
+    "serve-favicon": "^2.5.0"
+  }
+}

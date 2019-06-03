@@ -1,0 +1,59 @@
+extends ../template_admin
+
+block head
+
+block content
+ .row
+     .col-md-6
+      .box.box-primary
+       .box-header.with-border
+        h3.box-title Add Product
+       // /.box-header
+       // form start
+       form(role='form', action='/admin/product/add', method='post', enctype="multipart/form-data")
+        .box-body
+         -if(error != null)
+          .form-group.has-error
+           p.help-block Example block-level help text here.
+         .form-group
+          label(for='name') Name
+          input#name.form-control(placeholder='Name', name='name', type='text', required='required')
+          h6.error(style='color: red;')
+         .form-group
+          label(for='price') Price
+          input#price.form-control(placeholder='Price', name='price', type='number', required='required', min="0", step="any")
+          h6.error(style='color: red;')
+         .form-group
+          label(for='quantity') Quantity
+          input#quantity.form-control(placeholder='Quantity', name='quantity', type='number', required='required', min="1")
+          h6.error(style='color: red;')
+         .form-group
+          label(for='description') Description
+          textarea(name="description")
+         .form-group
+          label(for='photo') Photo
+          input(type='file', accept="image/*", name='photo')
+         .checkbox
+          label
+           input(name='special', value='false', type='checkbox')
+           |  Special
+         .form-group
+          label Category
+          select.form-control(name='categoryId')
+           -each category in categories 
+            optgroup(label= category.name)
+             -if(category.subcategories != null)
+               each subcategory in category.subcategories
+                option(value= subcategory.id)= subcategory.name
+         .form-group
+          label Brand
+          select.form-control(name='brandId')
+           -each brand in brands 
+            option(value= brand.id)= brand.name
+         .checkbox
+          label
+           input(name='status', checked='checked', value='true', type='checkbox')
+           |  Active
+        // /.box-body
+        .box-footer
+         button.btn.btn-primary(type='submit') Save

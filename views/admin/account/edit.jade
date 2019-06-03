@@ -1,0 +1,52 @@
+extends ../template_admin
+
+block head
+
+block content
+ .row
+     .col-md-6
+      .box.box-primary
+       .box-header.with-border
+        h3.box-title Edit Account
+       // /.box-header
+       // form start
+       form(role='form', action='/admin/account/edit', method='post', enctype="multipart/form-data")
+        .box-body
+         -if(error != null)
+          .form-group.has-error
+           p.help-block Example block-level help text here.
+         .form-group
+          label(for='username') Username
+          input#username.form-control(placeholder='Username', name='username', type='text', readonly='readonly', value=account.username)
+          h6.error(style='color: red;')
+         .form-group
+          label(for='password') Password
+          input#password.form-control(placeholder='Password', name='password', type='password')
+          h6.error(style='color: red;')
+         .form-group
+          label(for='fullName') Full Name
+          input#fullName.form-control(placeholder='Full Name', name='fullName', type='text', value=account.fullName)
+          h6.error(style='color: red;')
+         .form-group
+          label(for='email') Email
+          input#email.form-control(placeholder='Email', name='email', type='text', value=account.email)
+          h6.error(style='color: red;')
+         .form-group
+          label Role
+          select.form-control(name='roleId')
+           -each role in roles
+            -if(role.id == account.roleId)
+                 option(value= role.id, selected='selected')= role.name
+            -if(role.id != account.roleId)
+                 option(value= role.id)= role.name
+         .checkbox
+          label
+           -if(account.status)
+            input(name='status', checked='checked', value='true', type='checkbox')
+            |  Active
+           -if(!account.status)
+            input(name='status', value='true', type='checkbox')
+            |  Active
+        // /.box-body
+        .box-footer
+         button.btn.btn-primary(type='submit') Save

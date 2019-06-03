@@ -1,0 +1,29 @@
+extends ../template
+
+block head
+
+block content    
+ h2.title.text-center Orders List
+ #cart_items
+  .table-responsive.cart_info
+   table.table.table-condensed
+    thead
+     tr.cart_menu
+      td.image Id
+      td.description Created
+      td.quantity Status
+      td.total Option
+      td
+    tbody
+     -if(orders != null)
+       each item, index in orders
+        tr
+         td.cart_product
+          span= item.id
+         td.cart_description
+          span= item.created
+         td.cart_quantity
+          span= item.status 
+         td.cart_delete
+          a.cart_quantity_delete(href='/account/order/detail/' + item.id)
+           i.fa.fa-bars           

@@ -1,0 +1,41 @@
+extends ../template
+
+block head
+
+block content    
+ h2.title.text-center Orders Detail
+ #cart_items
+  .table-responsive.cart_info
+   table.table.table-condensed
+    thead
+     tr.cart_menu
+      td.image Id
+      td.description Name
+      td.price Photo
+      td.quantity Price
+      td.quantity Quantity
+      td.total Sub Total
+      td
+    tbody
+     -if(orderDetails != null)
+       -var s = 0
+       each item, index in orderDetails
+        -s += item.price * item.quantity
+        tr
+         td.cart_product
+          span= item.productId
+         td.cart_description
+          span= item.productInfo[0].name
+         td.cart_product
+          img(src='/images/home/' + item.productInfo[0].photo, alt='', width='110')
+         td.cart_price
+          span= '$' + item.price.toFixed(2)
+         td.cart_quantity
+          span= item.quantity 
+         td.cart_price
+          span= '$' + (item.price * item.quantity ).toFixed(2)
+       tr
+        td(colspan='5', align='center') 
+         h4 Sum
+        td(align='left')
+         span= '$' + s.toFixed(2)     

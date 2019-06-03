@@ -1,0 +1,42 @@
+extends ../template
+
+block head
+
+block content
+ .product-details
+  // product-details
+  .col-sm-5
+   .view-product
+    img(src='/images/home/' + product.photo, alt='')
+  .col-sm-7
+   .product-information
+    // /product-information
+    
+    h2= product.name
+    p= 'Product ID: ' +product.id
+    span
+     span= 'US $' + product.price.toFixed(2)
+     a.btn.btn-default.add-to-cart(href='/cart/add/' + product.id)
+      i.fa.fa-shopping-cart
+      | Add to cart
+    p= product.description
+     
+   // /product-information
+ // /product-details
+ // /category-tab
+ .recommended_items
+  // recommended_items
+  h2.title.text-center recommended items
+  each p in products
+   .col-sm-4
+    .product-image-wrapper
+     .single-products
+      .productinfo.text-center
+       a(href='/product/detail/' + p.id)
+        img(src='/images/home/' + p.photo, alt='')
+       h2= '$' + p.price.toFixed(2)
+       p= p.name
+       a.btn.btn-default.add-to-cart(href='/cart/add/' + p.id)
+        i.fa.fa-shopping-cart
+        | Add to cart
+    

@@ -1,0 +1,26 @@
+extends ../template_admin
+
+block head
+
+block content
+ .row
+     .col-md-6
+      .box.box-primary
+       .box-header.with-border
+        h3.box-title Edit Setting
+       // /.box-header
+       // form start
+       form(role='form', action='/admin/setting/edit', method='post')
+        .box-body
+         -if(error != null)
+          .form-group.has-error
+           p.help-block Example block-level help text here.
+         .form-group
+          label(for='key')= setting.label
+          input#key.form-control(placeholder='Value', name='value', type='text', required='required', value=setting.value)
+          input.form-control(name='key', type='hidden', value=setting.key)
+          input.form-control(name='group', type='hidden', value=setting.group)
+          h6.error(style='color: red;')
+        // /.box-body
+        .box-footer
+         button.btn.btn-primary(type='submit') Save

@@ -1,0 +1,59 @@
+extends ../template
+
+block head
+
+block content    
+ h2.title.text-center Cart Info
+ form(id='cart_items', method='post', action=settings[2].value)
+  .table-responsive.cart_info
+   table.table.table-condensed
+    thead
+     tr.cart_menu
+      td.image Item
+      td.description
+      td.price Price
+      td.quantity Quantity
+      td.total Total
+      td
+    tbody
+     -var index = 0
+     -var s = 0
+     -if(session.cart != null)
+       each item, index in session.cart
+        -s += item.product.price * item.quantity
+        tr
+         td.cart_product
+          a(href='/product/detail/' + item.product.id)
+           img(src='/images/home/' + item.product.photo, alt='', width='110')
+          input(type='hidden', name='item_name_' + (index + 1), value=item.product.name)
+          input(type='hidden', name='item_number_' + (index + 1), value=item.product.id)
+          input(type='hidden', name='amount_' + (index + 1), value=item.product.price)
+          input(type='hidden', name='quantity_' + (index + 1), value=item.quantity)
+         td.cart_description
+          a(href='/product/detail/' + item.product.id)= item.product.name
+         td.cart_price
+          span= '$' + item.product.price.toFixed(2)
+         td.cart_quantity
+          span= item.quantity 
+         td.cart_total
+          span= '$' + (item.product.price * item.quantity ).toFixed(2)
+         td.cart_delete
+          a.cart_quantity_delete(href='/cart/delete/' + index)
+           i.fa.fa-times
+     tr
+      td(colspan='4', align='center') 
+       h4 Sum
+      td(align='left')
+       span= '$' + s.toFixed(2)
+     tr
+      td.cart_price(colspan='7', align='right')
+       input(type='hidden', name='cmd', value='_cart')
+       input(type='hidden', name='business', value=settings[0].value)
+       input(type='hidden', name='upload', value='1')
+       input(type='hidden', name='return', value=settings[1].value)
+       -if(session.cart != null && session.username != null)
+         input(type='image', src='/images/cart/btn_xpressCheckout.gif', style='margin-top:10px;')
+       -if(session.cart != null && session.username == null)
+         a.btn.btn-default.add-to-cart(href='/account/login')
+          i.fa.fa-shopping-cart
+          | Please Login to Checkout PayPal
