@@ -393,16 +393,20 @@ router.get('/loginVendor' , async (req, res, next) =>{
     }
 })
 router.post('/loginVendor', async (req, res, next) => {
+
     var db = req.db;
     var categoryTable = db.get('categories');
     var brandTable = db.get('brands');
+    var accountTable = db.get('accounts');
     try {
         let categories = await categoryTable.find({status: true});
         let brands = await brandTable.find({status: true});
         var data = {categories: categories, brands: brands};
         let findVendor = await accountTable.findOne({$and: [{username: req.body.username}, {status: true}, {roleId: 'vendor'}]});
+        console.log(findVendor);
         if (findVendor != null) {
-            checkPass = bcrypt.compareSync(req.body.password, account.password);
+            checkPass = bcrypt.compareSync(req.body.password, findVendor.password);
+            console.log(checkPass);
             if (checkPass) {
                 req.session.vendor = findVendor;
                 res.redirect('home');
