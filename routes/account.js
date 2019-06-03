@@ -379,7 +379,20 @@ router.post('/sign-up-vendor', async (req, res, next) => {
     }
 
 })
-router.get('/loginVendor', async (req, res, next) => {
+router.get('/loginVendor' , async (req, res, next) =>{
+    var db = req.db;
+    var categoryTable = db.get('categories');
+    var brandTable = db.get('brands');
+    try {
+        let categories = await categoryTable.find({status: true});
+        let brands = await brandTable.find({status: true});
+        var data = {categories: categories, brands: brands};
+        res.render('account/loginVendor', data);
+    } catch (error) {
+        res.render('account/loginVendor');
+    }
+})
+router.post('/loginVendor', async (req, res, next) => {
     var db = req.db;
     var categoryTable = db.get('categories');
     var brandTable = db.get('brands');
@@ -390,7 +403,7 @@ router.get('/loginVendor', async (req, res, next) => {
         let findVendor = await accountTable.findOne({$and: [{username: req.body.username}, {status: true}, {roleId: 'vendor'}]});
         if (findVendor != null) {
             checkPass = bcrypt.compareSync(req.body.password, account.password);
-            if (checkPass != null) {
+            if (checkPass) {
                 req.session.vendor = findVendor;
                 res.redirect('home');
             } else {

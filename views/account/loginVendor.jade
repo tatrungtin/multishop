@@ -7,7 +7,7 @@ block content
   .signup-form
    h2 Login to your vendor
    p= (message == null ? '': message)
-   form(method='post', action='/account/login')
+   form(method='post', action='/account/loginVendor')
     input(placeholder='Username', type='text', name='username', required='required')
     input(placeholder='Password', type='password', name='password', required='required')
     button.btn.btn-default(type='submit') Login
