@@ -408,8 +408,8 @@ router.post('/loginVendor', async (req, res, next) => {
             checkPass = bcrypt.compareSync(req.body.password, findVendor.password);
             console.log(checkPass);
             if (checkPass) {
-                req.session.vendor = findVendor;
-                res.redirect('home');
+                req.session.username = req.body.username;
+                res.redirect('/');
             } else {
                 data['message'] = "Username or Password incorrect";
                 res.render('account/loginVendor', data);
